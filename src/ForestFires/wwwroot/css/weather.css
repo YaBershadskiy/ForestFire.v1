@@ -1,0 +1,38 @@
+﻿body {
+}
+
+#weather-div hr {
+    border: none;
+    height: 2px;
+    clear: both;
+    color: white;
+}
+
+#weather-div #title-div {
+    float: left;
+    width: auto;
+}
+
+#weather-div .head-block {
+    width: 100%;
+    min-width:1030px;
+}
+
+    #weather-div .head-block a {
+        text-decoration: none;
+        color: rgb( 251, 252, 247 );
+        font-size:20pt;
+    }
+
+    #weather-div .head-block .buttons {
+        display: inline-block;
+        width: 220px;
+        float: right;
+        margin: 22px 0 0 5px; 
+        text-align:center;
+        padding:0 0 6px 0;
+        cursor:pointer;
+    }
+    
+
+    

@@ -1,0 +1,71 @@
+﻿
+#sensors-div hr{
+    border:none;
+    height:2px;  
+}
+
+.head-block{
+    background:#b0cf00;
+    overflow:hidden;
+}
+
+.head-block hr{    
+    background:white;
+    margin:7px 0;
+}
+
+.head-block p{
+    padding-left:10px;
+    font-size:36pt;
+    margin:0 10px;
+}
+
+.main-block{
+    font-size: 18pt;
+    color: rgb( 27, 42, 26 );
+    text-align:center;
+    padding:20px;
+}
+
+.info-block{
+    display:inline-block;
+    overflow:hidden;
+    min-width:1140px;
+    text-align:center;
+}
+
+.info-block ul{
+    margin:0;
+    padding:0;
+    list-style:none;
+    text-align:left;
+}    
+
+.info-block li{
+    line-height:30px;
+    height:37px;
+    padding:10px 0;
+    vertical-align:middle;
+}    
+
+.info-block li img{
+    vertical-align:middle;
+}
+
+.info-block .item{
+    display:inline-block;
+    padding:0px 30px;
+    margin:0 10px;
+}
+
+.main-block hr{
+    position:absolute;
+    background:#b0cf00;
+    min-width:1120px;
+    width:auto;
+    margin: 70px 0 0 20px;
+}
+
+.info-block .main .item{
+    margin:0 15px;
+}

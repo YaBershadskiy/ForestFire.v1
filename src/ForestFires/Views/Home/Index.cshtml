@@ -7,6 +7,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="~/js/site.js"></script>
+    <link href="~/css/header.css" rel="stylesheet" />
+    <link href="~/css/status.css" rel="stylesheet" />
+    <link href="~/css/map.css" rel="stylesheet" />
+    <link href="~/css/footert.css" rel="stylesheet" />
+    <link href="~/css/sensors.css" rel="stylesheet" />
+    <link href="~/css/weather.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
     <style>
         /* Always set the map height explicitly to define the size of the div
         * element that contains the map. */
@@ -15,6 +24,7 @@
         }
         /* Optional: Makes the sample page fill the window. */
         html, body {
+            font-family: "Segoe UI";
             height: 100%;
             margin: 0;
             padding: 0;
@@ -22,52 +32,324 @@
     </style>
 </head>
 <body>
-    <div id="map"></div>
-    <script>
-    var map;
+    <header>
+        <div class="header-style">
+            <div id="site-name">
+                <div id="image-svg">
+                    <img src="~/images/logo.png" alt="Alternate Text" />
+                </div>
+                <div id="site-text">
+                    Fire Monitor
+                </div>
+            </div>
+            <div id="search-block">
+                <div id="search-string">
+                    <input id="input-text" type="text" name="name" value="Sample Text" />
+                </div>
+                <div id="search-icon">
+                    <a id="find" href="#"><img src="~/images/search.png" alt="Alternate Text" /></a>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </header>
+    <status>
+        <div class="status-block">
+            <div class="status-images">
+                <img src="~/images/status-normal.png" alt="Status-normal" />
+            </div>
+            <div class="status-text">
+                Normal
+            </div>
+        </div>
 
-    function initMap() {
-        var uluru = { lat: 50.008189, lng: 36.242334 };
-        map = new google.maps.Map(document.getElementById('map'),
+    </status>
+    <google-map>
+        <div id="map-block">
+            <div id="map"></div>
+            <div id="data-block">
+                <div id="tempherature">
+                    <div id="degrees">25°C</div>
+                    <div id="feels-like">feels like 22°C</div>
+                </div>
+                <div id="weather-img">
+                    <img class="img-about" id="img-weather" src="~/images/weather.png" alt="Alternate Text" />
+                </div>
+                <div id="about-info">
+                    <b>Humindity</b><br />
+                    30 % <br />
+
+                    <b>Wind direction, speed & gust (mph)</b><br />
+                    NW  ☺ 20 <br />
+                    <b>Smoke (ppm)</b><br />
+                    0.015 %
+                </div>
+                <div id="about-info-img">
+                    <div class="info-group" id="info-group-1">
+                        <div class="blue-phone-about" id="blue-phone-about-1"></div>
+                        <img class="img-about" src="~/images/fire.png" alt="Alternate Text" />
+                    </div>
+                    <div class="info-group" id="info-group-2">
+                        <div class="blue-phone-about" id="blue-phone-about-2"></div>
+                        <img class="img-about" src="~/images/roads.png" alt="Alternate Text" />
+                    </div>
+                    <div class="info-group" id="info-group-3">
+                        <div class="blue-phone-about" id="blue-phone-about-3"> </div>
+                        <img class="img-about" src="~/images/fire-department.png" alt="Alternate Text" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </google-map>
+
+    <section id="weather">
+        <div id="weather-div">
+            <div class="head-block">
+                <div id="title-div">
+                    <p>Weather statistic</p>
+                </div>
+                <div class="buttons" id="month" onmouseover="changeTo(this)" onmouseout="changeBack(this)" onclick="stayOn(this)">
+                    <a >
+                        <div>
+                            1 month
+                        </div>
+                    </a>
+                </div>
+                <div class="buttons" id="ten-days" onmouseover="changeTo(this)" onmouseout="changeBack(this)" onclick="stayOn(this)">
+                    <a >
+                        <div>
+                            10 day
+                        </div>
+                    </a>
+                </div>
+                <div class="buttons" id="five-days" onmouseover="changeTo(this)" onmouseout="changeBack(this)" onclick="stayOn(this)">
+                    <a >
+                        <div>
+                            5 day
+                        </div>
+                    </a>
+                </div>
+                <hr />
+            </div>
+            <div id="weather-main-block" class="main-block">
+                <div class="info-block">
+                    <div class="info-block main">
+                        <hr />
+                        <div class="item">
+                            <ul>
+                                <li>Date</li>
+                                <br />
+                                @foreach (var item in Model)
+                                {
+                                    <li>@item.Updated.ToShortDateString()</li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <ul>
+                                <li>Temperature</li>
+                                <br />
+                                @foreach (var item in Model)
+                                {
+                                    <li>@item.Temperature.ToString() C</li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <ul>
+                                <li>Humidity</li>
+                                <br />
+                                @foreach (var item in Model )
+                                {
+                                    <li>@item.Humidity.ToString()%</li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <ul>
+                                <li>Wind</li>
+                                <br />
+                                <li>12324224</li>
+                                <li>12324224</li>
+                                <li>12324224</li>
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <ul>
+                                <li>Smoke</li>
+                                <br />
+                                <li>15 ppm</li>
+                                <li>15 ppm</li>
+                                <li>15 ppm</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="sensors">
+        <div id="sensors-div">
+            <div class="head-block">
+                <p>Sensors</p>
+                <hr />
+            </div>
+            <div class="main-block">
+                <div class="info-block">
+                    <div class="info-block main">
+                        <hr />
+                        <div class="item">
+                            <ul>
+                                <li>Sensor</li>
+                                <br />
+                                @foreach (var item in Model)
+                                {
+                                    <li>@item.Updated.ToShortDateString()</li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <ul>
+                                <li>Temperature</li>
+                                <br />
+                                @foreach (var item in Model)
+                                {
+                                    <li>@item.Temperature.ToString() C</li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <ul>
+                                <li>Humidity</li>
+                                <br />
+                                @foreach (var item in Model)
+                                {
+                                    <li>@item.Humidity.ToString()%</li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <ul>
+                                <li>Smoke</li>
+                                <br />
+                                @foreach (var item in Model)
+                                {
+                                    <li>@item.Smoke.ToString() ppm</li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <ul>
+                                <li>Status</li>
+                                <br />
+                                @foreach (var item in Model)
+                                {
+                                    <li>                                        
+                                        <div>
+                                            @if (item.CurrentStatus == Status.Ok)
+                                            {
+                                                <img src="~/images/ok.png" alt="Alternate Text"/>
+                                            }
+                                            else
+                                            {
+                                                <img src="~/images/ok.png" alt="Alternate Text" />
+                                            }
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <ul>
+                                <li>Date</li>
+                                <br />
+                                @foreach (var item in Model)
+                                {
+                                    <li>@item.Updated.ToShortDateString()</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div id="footer-div">
+            <div id="developers">
+                <h4>Developers:</h4>
+                <ul>
+                    <li>Nil Luchko</li>
+                    <li>Ilona Zelinko</li>
+                    <li>Yaroslav Bershadsky</li>
+                    <li>Bogdan Goloschapov</li>
+                    <li>Dima Kuharenko</li>
+                </ul>
+            </div>
+            <div id="contacts">
+                <h4>Contacts:</h4>
+                <ul>
+                    <li>luchko.nil@mail.ru</li>
+                    <li>i.zelinko@student.csn.khai.edu</li>
+                    <li>ya.bershadskiy@hotmail.com</li>
+                    <li>b.goloshapov@student.csn.khai.edu</li>
+                    <li>dmitriy.kukharenko@hotmail.com</li>
+                </ul>
+            </div>
+            <div id="nasa-logo">
+                <img src="~/images/nasa.png" alt="Alternate Text" width="270px" height="220px" />
+            </div>
+        </div>
+    </footer>
+    <script>
+        var isClicked="";
+        function changeTo(obj)
         {
-            zoom: 20,
-            center: uluru,
-            mapTypeId: 'hybrid'
-        });
-        @foreach (var sensor in Model)
-        {
-            <text>debugger; </text>
-            <text>
+            $('#'+obj.id).css('background','white');
+            $('#'+obj.id+' a').css('color','rgb( 176, 207, 0 )');
+        }
+        function changeBack(obj){
+            if(isClicked!=obj.id)
+            {
+                $('#'+obj.id).css('background','none');
+                $('#'+obj.id+' a').css('color','white');
+            }
+        }
+        function stayOn(obj){
+            $(".buttons").css('background','none');
+            $(".buttons a").css('color','white');
+            $('#'+obj.id).css('background','white');
+            $('#'+obj.id+' a').css('color','rgb( 176, 207, 0 )');
+            isClicked=obj.id;
+        }
+    </script>
+
+    <script>
+            var map;
+            function initMap() {
+                var uluru = { lat: 50.008189, lng: 36.242334 };
+                map = new google.maps.Map(document.getElementById('map'),
+                {
+                    zoom: 20,
+                    center: uluru,
+                    mapTypeId: 'hybrid'
+                });
+                @foreach (var sensor in Model)
+                {
+                    <text>
                 var marker = new google.maps.Marker({
                     position: { lat: @sensor.Lattitude, lng: @sensor.Longtitude },
                     map: map,
                     title: '@sensor.Info'
                 });
-            </text>
-        }
-    }
+                </text>
+                }
+            }
+
+
     </script>
-    @*// Create a tag and set the USGS URL as the source.
-            //var script = document.createElement('script');
-            //// This example uses a local copy of the GeoJSON stored at
-            //// http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojsonp
-            //script.src = 'https://developers.google.com/maps/documentation/javascript/examples/json/earthquake_GeoJSONP.js';
-            //document.getElementsByTagName('head')[0].appendChild(script);
-
-        // Loop through the results array and place a marker for each
-        //// set of coordinates.
-        //window.eqfeed_callback = function (results) {
-        //    for (var i = 0; i < results.features.length; i++) {
-        //        var coords = results.features[i].geometry.coordinates;
-        //        var latLng = new google.maps.LatLng(coords[1], coords[0]);
-        //        var marker = new google.maps.Marker({
-        //            position: latLng,
-        //            map: map
-        //        });
-        //    }
-        //}*@
-
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-Ft9IBQZDBxxuuJhm5kJmm0o8-mHJ7ZU&callback=initMap"
             type="text/javascript"></script>
+
 </body>
 </html>
