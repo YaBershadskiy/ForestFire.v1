@@ -29,7 +29,8 @@ namespace ForestFires
         {
             // Add framework services.
             services.AddMvc();
-            services.AddScoped<SensorsContext>(_ => new SensorsContext(Configuration.GetSection("DefaultConnection").Value));
+            // services.AddScoped<SensorsContext>(_ => new SensorsContext(Configuration.GetSection("DefaultConnection").Value));
+            services.AddScoped<SensorsContext>(_ => new SensorsContext(Configuration.GetSection("IlonaConnection").Value));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
