@@ -1,0 +1,24 @@
+﻿.status-block {
+    margin-left: 60px;
+    height: 63px;
+    display: block;
+    vertical-align: top;
+    text-align: left;
+    background: linear-gradient(to right, #148a1a, white);
+    margin-bottom: 10px;
+    min-width: 300px;
+}
+
+.status-images {
+    display: inline-block;
+    margin-left: -30px;
+}
+
+.status-text {
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px;
+    font-size: 32px;
+    font-weight: 400;
+    color: rgb(27, 42, 26);
+}
