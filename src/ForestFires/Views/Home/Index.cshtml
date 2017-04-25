@@ -7,6 +7,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link href="~/css/footert.css" rel="stylesheet" />
+    <link href="~/css/sensors.css" rel="stylesheet" />
+    <link href="~/css/weather.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
     <style>
         /* Always set the map height explicitly to define the size of the div
         * element that contains the map. */
@@ -22,7 +26,29 @@
     </style>
 </head>
 <body>
-    <div id="map"></div>
+    <script>
+       var isClicked="";
+        function changeTo(obj)
+        {
+            $('#'+obj.id).css('background','white');
+            $('#'+obj.id+' a').css('color','rgb( 176, 207, 0 )');
+        }
+        function changeBack(obj){
+            if(isClicked!=obj.id)
+            {
+                $('#'+obj.id).css('background','none');
+                $('#'+obj.id+' a').css('color','white');
+            }
+        }
+        function stayOn(obj){
+            $(".buttons").css('background','none');
+            $(".buttons a").css('color','white');
+            $('#'+obj.id).css('background','white');
+            $('#'+obj.id+' a').css('color','rgb( 176, 207, 0 )');
+            isClicked=obj.id;
+        }
+    </script>
+    @*<div id="map"></div>*@
     <script>
     var map;
 
@@ -46,28 +72,201 @@
             </text>
         }
     }
-    </script>
-    @*// Create a tag and set the USGS URL as the source.
-            //var script = document.createElement('script');
-            //// This example uses a local copy of the GeoJSON stored at
-            //// http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojsonp
-            //script.src = 'https://developers.google.com/maps/documentation/javascript/examples/json/earthquake_GeoJSONP.js';
-            //document.getElementsByTagName('head')[0].appendChild(script);
-
-        // Loop through the results array and place a marker for each
-        //// set of coordinates.
-        //window.eqfeed_callback = function (results) {
-        //    for (var i = 0; i < results.features.length; i++) {
-        //        var coords = results.features[i].geometry.coordinates;
-        //        var latLng = new google.maps.LatLng(coords[1], coords[0]);
-        //        var marker = new google.maps.Marker({
-        //            position: latLng,
-        //            map: map
-        //        });
-        //    }
-        //}*@
+    </script>    
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-Ft9IBQZDBxxuuJhm5kJmm0o8-mHJ7ZU&callback=initMap"
             type="text/javascript"></script>
+
+    <section id="weather">
+        <div id="weather-div">
+            <div class="head-block">
+                <div id="title-div">
+                    <p>Weather statistic</p>
+                </div>
+                <div class="buttons" id="month" onmouseover="changeTo(this)" onmouseout="changeBack(this)" onclick="stayOn(this)">
+                    <a href="#">
+                        <div>
+                            1 month
+                        </div>
+                    </a>
+                </div>
+                <div class="buttons" id="ten-days" onmouseover="changeTo(this)" onmouseout="changeBack(this)" onclick="stayOn(this)">
+                    <a href="#">
+                        <div>
+                            10 day
+                        </div>
+                    </a>
+                </div>
+                <div class="buttons" id="five-days" onmouseover="changeTo(this)" onmouseout="changeBack(this)" onclick="stayOn(this)">
+                    <a href="#">
+                        <div>
+                            5 day
+                        </div>
+                    </a>
+                </div>
+                <hr />
+            </div>
+            <div class="main-block">
+                <div class="info-block">
+                    <div class="info-block main">
+                        <hr />
+                        <div class="item">
+                            <ul>
+                                <li>Date</li>
+                                <br />
+                                <li>12324224</li>
+                                <li>12324224</li>
+                                <li>12324224</li>
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <ul>
+                                <li>Temperature</li>
+                                <br />
+                                <li>23*</li>
+                                <li>23*</li>
+                                <li>23*</li>
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <ul>
+                                <li>Humidity</li>
+                                <br />
+                                <li>30%</li>
+                                <li>30%</li>
+                                <li>30%</li>
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <ul>
+                                <li>Wind</li>
+                                <br />
+                                <li>12324224</li>
+                                <li>12324224</li>
+                                <li>12324224</li>
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <ul>
+                                <li>Smoke</li>
+                                <br />
+                                <li>15 ppm</li>
+                                <li>15 ppm</li>
+                                <li>15 ppm</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="sensors">
+        <div id="sensors-div">
+            <div class="head-block">
+                <p>Sensors</p>
+                <hr />
+            </div>
+            <div class="main-block">
+                <div class="info-block">
+                    <div class="info-block main">
+                        <hr />
+                        <div class="item">
+                            <ul>
+                                <li>Sensor</li>
+                                <br />
+                                <li>12324224</li>
+                                <li>12324224</li>
+                                <li>12324224</li>
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <ul>
+                                <li>Temperature</li>
+                                <br />
+                                <li>23*</li>
+                                <li>23*</li>
+                                <li>23*</li>
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <ul>
+                                <li>Humidity</li>
+                                <br />
+                                <li>30%</li>
+                                <li>30%</li>
+                                <li>30%</li>
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <ul>
+                                <li>Smoke</li>
+                                <br />
+                                <li>15 ppm</li>
+                                <li>15 ppm</li>
+                                <li>15 ppm</li>
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <ul>
+                                <li>Status</li>
+                                <br />
+                                <li>
+                                    <div>
+                                        <img src="~/images/ok.png" alt="Alternate Text" />
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <img src="~/images/ok.png" alt="Alternate Text" />
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <img src="~/images/ok.png" alt="Alternate Text" />
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <ul>
+                                <li>Date</li>
+                                <br />
+                                <li>12324224</li>
+                                <li>12324224</li>
+                                <li>12324224</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div id="footer-div">
+            <div id="developers">
+                <h4>Developers:</h4>
+                <ul>
+                    <li>Nil Luchko</li>
+                    <li>Ilona Zelinko</li>
+                    <li>Yaroslav Bershadsky</li>
+                    <li>Bogdan Goloschapov</li>
+                    <li>Dima Kuharenko</li>
+                </ul>
+            </div>
+            <div id="contacts">
+                <h4>Contacts:</h4>
+                <ul>
+                    <li>luchko.nil@mail.ru</li>
+                    <li>i.zelinko@student.csn.khai.edu</li>
+                    <li>ya.bershadskiy@hotmail.com</li>
+                    <li>b.goloshapov@student.csn.khai.edu</li>
+                    <li>dmitriy.kukharenko@hotmail.com</li>
+                </ul>
+            </div>
+            <div id="nasa-logo">
+                <img src="~/images/nasa.png" alt="Alternate Text" width="270px" height="220px" />
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
