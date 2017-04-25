@@ -11,7 +11,7 @@ namespace ForestFires.DAL
     {
         public SensorsContext Create()
         {
-            return new SensorsContext("Server=HP\\SQLEXPRESS;Database=SensorsDBv1;Trusted_Connection=True;MultipleActiveResultSets=true");
+            return new SensorsContext("Server=(LocalDB)\\MSSQLLocalDB;Database=SensorsDBv1;Trusted_Connection=True;MultipleActiveResultSets=true");
         }
     }
 }

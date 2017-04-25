@@ -12,6 +12,9 @@
     <link href="~/css/header.css" rel="stylesheet" />
     <link href="~/css/status.css" rel="stylesheet" />
     <link href="~/css/map.css" rel="stylesheet" />
+    <link href="~/css/footert.css" rel="stylesheet" />
+    <link href="~/css/sensors.css" rel="stylesheet" />
+    <link href="~/css/weather.css" rel="stylesheet" />
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <style>
         /* Always set the map height explicitly to define the size of the div
@@ -59,17 +62,17 @@
                 Normal
             </div>
         </div>
-   
+
     </status>
     <google-map>
         <div id="map-block">
- <div id="map"></div>
-    <div id="data-block">
+            <div id="map"></div>
+            <div id="data-block">
                 <div id="tempherature">
                     <div id="degrees">25°C</div>
                     <div id="feels-like">feels like 22°C</div>
                 </div>
-                <div id="weather">
+                <div id="weather-img">
                     <img class="img-about" id="img-weather" src="~/images/weather.png" alt="Alternate Text" />
                 </div>
                 <div id="about-info">
@@ -98,59 +101,6 @@
             </div>
         </div>
     </google-map>
- <script>
-       var isClicked="";
-        function changeTo(obj)
-        {
-            $('#'+obj.id).css('background','white');
-            $('#'+obj.id+' a').css('color','rgb( 176, 207, 0 )');
-        }
-        function changeBack(obj){
-            if(isClicked!=obj.id)
-            {
-                $('#'+obj.id).css('background','none');
-                $('#'+obj.id+' a').css('color','white');
-            }
-        }
-        function stayOn(obj){
-            $(".buttons").css('background','none');
-            $(".buttons a").css('color','white');
-            $('#'+obj.id).css('background','white');
-            $('#'+obj.id+' a').css('color','rgb( 176, 207, 0 )');
-            isClicked=obj.id;
-        }
-    </script>
-    <script>
-    var map;
-        $(document).ready(function () {
-            initMap();
-        });
-
-    function initMap() {
-        var uluru = { lat: 50.008189, lng: 36.242334 };
-        map = new google.maps.Map(document.getElementById('map'),
-        {
-            zoom: 20,
-            center: uluru,
-            mapTypeId: 'hybrid'
-        });
-        @foreach (var sensor in Model)
-        {
-            <text>debugger; </text>
-            <text>
-                var marker = new google.maps.Marker({
-                    position: { lat: @sensor.Lattitude, lng: @sensor.Longtitude },
-                    map: map,
-                    title: '@sensor.Info'
-                });
-            </text>
-        }
-    }
-    </script>
-
-
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-Ft9IBQZDBxxuuJhm5kJmm0o8-mHJ7ZU&callback=initMap"
-            type="text/javascript"></script>
 
     <section id="weather">
         <div id="weather-div">
@@ -159,21 +109,21 @@
                     <p>Weather statistic</p>
                 </div>
                 <div class="buttons" id="month" onmouseover="changeTo(this)" onmouseout="changeBack(this)" onclick="stayOn(this)">
-                    <a href="#">
+                    <a >
                         <div>
                             1 month
                         </div>
                     </a>
                 </div>
                 <div class="buttons" id="ten-days" onmouseover="changeTo(this)" onmouseout="changeBack(this)" onclick="stayOn(this)">
-                    <a href="#">
+                    <a >
                         <div>
                             10 day
                         </div>
                     </a>
                 </div>
                 <div class="buttons" id="five-days" onmouseover="changeTo(this)" onmouseout="changeBack(this)" onclick="stayOn(this)">
-                    <a href="#">
+                    <a >
                         <div>
                             5 day
                         </div>
@@ -181,7 +131,7 @@
                 </div>
                 <hr />
             </div>
-            <div class="main-block">
+            <div id="weather-main-block" class="main-block">
                 <div class="info-block">
                     <div class="info-block main">
                         <hr />
@@ -189,27 +139,30 @@
                             <ul>
                                 <li>Date</li>
                                 <br />
-                                <li>12324224</li>
-                                <li>12324224</li>
-                                <li>12324224</li>
+                                @foreach (var item in Model)
+                                {
+                                    <li>@item.Updated.ToShortDateString()</li>
+                                }
                             </ul>
                         </div>
                         <div class="item">
                             <ul>
                                 <li>Temperature</li>
                                 <br />
-                                <li>23*</li>
-                                <li>23*</li>
-                                <li>23*</li>
+                                @foreach (var item in Model)
+                                {
+                                    <li>@item.Temperature.ToString() C</li>
+                                }
                             </ul>
                         </div>
                         <div class="item">
                             <ul>
                                 <li>Humidity</li>
                                 <br />
-                                <li>30%</li>
-                                <li>30%</li>
-                                <li>30%</li>
+                                @foreach (var item in Model )
+                                {
+                                    <li>@item.Humidity.ToString()%</li>
+                                }
                             </ul>
                         </div>
                         <div class="item">
@@ -249,66 +202,71 @@
                             <ul>
                                 <li>Sensor</li>
                                 <br />
-                                <li>12324224</li>
-                                <li>12324224</li>
-                                <li>12324224</li>
+                                @foreach (var item in Model)
+                                {
+                                    <li>@item.Updated.ToShortDateString()</li>
+                                }
                             </ul>
                         </div>
                         <div class="item">
                             <ul>
                                 <li>Temperature</li>
                                 <br />
-                                <li>23*</li>
-                                <li>23*</li>
-                                <li>23*</li>
+                                @foreach (var item in Model)
+                                {
+                                    <li>@item.Temperature.ToString() C</li>
+                                }
                             </ul>
                         </div>
                         <div class="item">
                             <ul>
                                 <li>Humidity</li>
                                 <br />
-                                <li>30%</li>
-                                <li>30%</li>
-                                <li>30%</li>
+                                @foreach (var item in Model)
+                                {
+                                    <li>@item.Humidity.ToString()%</li>
+                                }
                             </ul>
                         </div>
                         <div class="item">
                             <ul>
                                 <li>Smoke</li>
                                 <br />
-                                <li>15 ppm</li>
-                                <li>15 ppm</li>
-                                <li>15 ppm</li>
+                                @foreach (var item in Model)
+                                {
+                                    <li>@item.Smoke.ToString() ppm</li>
+                                }
                             </ul>
                         </div>
                         <div class="item">
                             <ul>
                                 <li>Status</li>
                                 <br />
-                                <li>
-                                    <div>
-                                        <img src="~/images/ok.png" alt="Alternate Text" />
-                                    </div>
-                                </li>
-                                <li>
-                                    <div>
-                                        <img src="~/images/ok.png" alt="Alternate Text" />
-                                    </div>
-                                </li>
-                                <li>
-                                    <div>
-                                        <img src="~/images/ok.png" alt="Alternate Text" />
-                                    </div>
-                                </li>
+                                @foreach (var item in Model)
+                                {
+                                    <li>                                        
+                                        <div>
+                                            @if (item.CurrentStatus == Status.Ok)
+                                            {
+                                                <img src="~/images/ok.png" alt="Alternate Text"/>
+                                            }
+                                            else
+                                            {
+                                                <img src="~/images/ok.png" alt="Alternate Text" />
+                                            }
+                                        </div>
+                                    </li>
+                                }
                             </ul>
                         </div>
                         <div class="item">
                             <ul>
                                 <li>Date</li>
                                 <br />
-                                <li>12324224</li>
-                                <li>12324224</li>
-                                <li>12324224</li>
+                                @foreach (var item in Model)
+                                {
+                                    <li>@item.Updated.ToShortDateString()</li>
+                                }
                             </ul>
                         </div>
                     </div>
@@ -343,5 +301,55 @@
             </div>
         </div>
     </footer>
+    <script>
+        var isClicked="";
+        function changeTo(obj)
+        {
+            $('#'+obj.id).css('background','white');
+            $('#'+obj.id+' a').css('color','rgb( 176, 207, 0 )');
+        }
+        function changeBack(obj){
+            if(isClicked!=obj.id)
+            {
+                $('#'+obj.id).css('background','none');
+                $('#'+obj.id+' a').css('color','white');
+            }
+        }
+        function stayOn(obj){
+            $(".buttons").css('background','none');
+            $(".buttons a").css('color','white');
+            $('#'+obj.id).css('background','white');
+            $('#'+obj.id+' a').css('color','rgb( 176, 207, 0 )');
+            isClicked=obj.id;
+        }
+    </script>
+
+    <script>
+            var map;
+            function initMap() {
+                var uluru = { lat: 50.008189, lng: 36.242334 };
+                map = new google.maps.Map(document.getElementById('map'),
+                {
+                    zoom: 20,
+                    center: uluru,
+                    mapTypeId: 'hybrid'
+                });
+                @foreach (var sensor in Model)
+                {
+                    <text>
+                var marker = new google.maps.Marker({
+                    position: { lat: @sensor.Lattitude, lng: @sensor.Longtitude },
+                    map: map,
+                    title: '@sensor.Info'
+                });
+                </text>
+                }
+            }
+
+
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-Ft9IBQZDBxxuuJhm5kJmm0o8-mHJ7ZU&callback=initMap"
+            type="text/javascript"></script>
+
 </body>
 </html>
