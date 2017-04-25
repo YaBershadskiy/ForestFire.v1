@@ -26,9 +26,9 @@ namespace ForestFires.Controllers
             //dbw.UpdateData(id, temperature, humidity, smoke);
 
             //Create new sensor
-            //dbw.SetDataFromObject(new Sensor(50.008189, 36.242334, 17.5, 15, 30, DateTime.Now, Status.Ok));
-            //dbw.SetDataFromObject(new Sensor(50.048189, 36.252334, 45, 18, 22, DateTime.Now, Status.Ok));
-            //dbw.SetDataFromObject(new Sensor(50.028189, 36.242834, 42, 12, 32, DateTime.Now, Status.Fire));
+            //dbw.SetDataFromObject(new Sensor(50.008189, 36.242334, 17.5, 15, 30,DateTime.Now, Status.Ok));
+            //dbw.SetDataFromObject(new Sensor(50.048189, 36.252334, 45, 18, 22,DateTime.Now, Status.Ok));
+            //dbw.SetDataFromObject(new Sensor(50.028189, 36.242834, 42, 12, 32,DateTime.Now, Status.Fire));
             //or
             //dbw.SetDataFromParams(latt,lngt,temperature,humidity,smoke);
 
