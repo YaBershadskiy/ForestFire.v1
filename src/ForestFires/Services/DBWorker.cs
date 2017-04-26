@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using ForestFires.DAL.Context;
 using ForestFires.Models;
+using Microsoft.Win32.SafeHandles;
 
 namespace ForestFires.Services
 {
-    public class DBWorker
+    public class DBWorker: IDisposable
     {
         private List<Sensor> Sensors { get; set; }
         private readonly SensorsContext _context;
+        private bool disposed = false;
+        SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
         public DBWorker(SensorsContext context)
         {
             _context = context;
@@ -28,10 +32,10 @@ namespace ForestFires.Services
             _context.SaveChanges();
         }
 
-        public void UpdateData(int Id, double temperature, double humidity, double smoke,DateTime time, Status status)
+        public bool UpdateData(int Id, double temperature, double humidity, double smoke,DateTime time, Status status, SensorsContext context)
         {
             //get current Sensor
-            var toUpdate = _context.Sensors.Find(Id);
+            var toUpdate = context.Sensors.Find(Id);
             //copy data
             var updated = toUpdate;
             //Update what you need
@@ -43,10 +47,10 @@ namespace ForestFires.Services
             //rewrite description
             updated.setInfo();
             //update record in DB
-            _context.Entry(toUpdate).CurrentValues.SetValues(updated);
+            context.Entry(toUpdate).CurrentValues.SetValues(updated);
             //save changes
-            _context.SaveChanges();
-
+            context.SaveChanges();
+            return true;
         }
         public IEnumerable<Sensor> GetSensors()
         {
@@ -57,5 +61,26 @@ namespace ForestFires.Services
             return Sensors;
         }
 
+        public void Dispose()
+        {
+           Dispose(true);
+           GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+                return;
+
+            if (disposing)
+            {
+                handle.Dispose();
+                // Free any other managed objects here.
+                //
+            }
+
+            // Free any unmanaged objects here.
+            //
+            disposed = true;
+        }
     }
 }

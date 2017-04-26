@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using ForestFires.DataRecieve;
 using ForestFires.DAL.Context;
 using Microsoft.AspNetCore.Mvc;
 using ForestFires.Models;
@@ -13,11 +15,15 @@ namespace ForestFires.Controllers
     {
         private readonly SensorsContext _context;
         private readonly DBWorker dbw;
+        private DataReciever dr;
 
         public HomeController(SensorsContext context)
         {
             _context = context;
             dbw = new DBWorker(_context);
+            dr = new DataReciever(_context);
+            
+            
         }
         public IActionResult Index()
         {
@@ -30,10 +36,43 @@ namespace ForestFires.Controllers
             //dbw.SetDataFromObject(new Sensor(50.048189, 36.252334, 45, 18, 22,DateTime.Now, Status.Ok));
             //dbw.SetDataFromObject(new Sensor(50.028189, 36.242834, 42, 12, 32,DateTime.Now, Status.Fire));
             //or
-            //dbw.SetDataFromParams(latt,lngt,temperature,humidity,smoke);
+            //dbw.SetDataFromParams(latt,lngt,temperature,humidity,smoke)
+            List<WeatherData> WDL = new List<WeatherData>();
+            try
+            {
+                WeatherData wd = Weather.GetWeatherFromSiteToday();
+                WDL.Add(wd);
+                ViewBag.Weather = WDL;
+            }
+            catch (Exception ex)
+            {
+            }
+           
 
             locations = dbw.GetSensors().ToList();
             return View(locations);
+        }
+
+        public JsonResult StartThread()
+        {
+            try
+            {
+                Thread daThread = new Thread(dr.RecieveData);
+                daThread.Start();
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    Thread daThread = new Thread(dr.RecieveData);
+                    daThread.Start();
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+            return  new JsonResult("");
         }
 
         public IActionResult Error()
