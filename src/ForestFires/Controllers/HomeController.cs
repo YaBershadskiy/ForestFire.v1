@@ -28,7 +28,7 @@ namespace ForestFires.Controllers
         public JsonResult AjaxWeatherResponse()
         {
             WeatherData wd = Weather.GetWeatherFromSiteToday();
-            return Json("[\"" + wd.Date.ToString() + "\",\"" + wd.AirTemperature.ToString() + "°C\", \"" + wd.Humidity.ToString() + "%\", \"" + wd.WindSpeed + " m/s\"]");
+            return Json("[\"" + wd.Date.ToString() + "\",\"" + wd.AirTemperature.ToString() + "°C\", \"" + wd.Humidity.ToString() + "%\", \"" + wd.WindSpeed + " m/s\"," + wd.WindDirection +"]");
         }
 
         [HttpPost]

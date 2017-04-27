@@ -55,11 +55,11 @@
         </div>
     </header>
     <status>
-        <div class="status-block">
-            <div class="status-images">
-                <img src="~/images/status-normal.png" alt="Status-normal" />
+        <div id="status-bar" class="status-block">
+            <div id="status-image" class="status-images">
+                <img id="status-ok" src="~/images/status-normal.png" alt="Status-normal" />
             </div>
-            <div class="status-text">
+            <div id="status-msg" class="status-text">
                 Normal
             </div>
         </div>
@@ -71,10 +71,6 @@
             <div id="data-block">
                 <div id="tempherature">
                     <div id="degrees">25°C</div>
-                    <div id="feels-like">feels like 22°C</div>
-                </div>
-                <div id="weather-img">
-                    <img class="img-about" id="img-weather" src="~/images/weather.png" alt="Alternate Text" />
                 </div>
                 <div id="about-info">
                     <b>Humindity</b><br />
@@ -143,7 +139,7 @@
 <g>
 </g>
 </svg>
-                        
+
                     </div>
                     <div class="info-group" id="info-group-2">
                         <div class="blue-phone-about" id="blue-phone-about-2"></div>
@@ -235,14 +231,14 @@
                                 <br />
                                 @if (ViewBag.Weather != null)
                                 {
-                                    foreach (WeatherData item in ViewBag.Weather )
+                                    foreach (WeatherData item in ViewBag.Weather)
                                     {
-                                       <li id="weather-wind">@item.WindSpeed m/s</li> 
+                                        <li id="weather-wind">@item.WindSpeed m/s</li>
                                     }
                                 }
                             </ul>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -331,7 +327,7 @@
                                 @{ id = 0;}
                                 @foreach (var item in Model)
                                 {
-                                    <li id="date-id-@id">@item.Updated.ToShortDateString()</li>
+                                    <li id="date-id-@id">@item.Updated.ToString()</li>
                                 }
                             </ul>
                         </div>
@@ -390,45 +386,147 @@
         }
     </script>
     <script>
+        var weatherUrl = '@Url.Action("AjaxWeatherResponse")';
+        var sensorsUrl = '@Url.Action("AjaxSensorsResponse")';
         var map;
         function initMap() {
+            // Create the map.
             var uluru = { lat: 50.008189, lng: 36.242334 };
-            map = new google.maps.Map(document.getElementById('map'),
-            {
+            var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 20,
                 center: uluru,
                 mapTypeId: 'hybrid'
             });
             @foreach (var sensor in Model)
-                {
-                    <text>
-                        var marker = new google.maps.Marker({
-                            position: { lat: @sensor.Lattitude, lng: @sensor.Longtitude },
-                            map: map,
-                            title: '@sensor.Info'
-                        });
-                    </text>
+            {
+                <text>
+            var marker = new google.maps.Marker({
+                position: { lat: @sensor.Lattitude, lng: @sensor.Longtitude },
+                map: map,
+                title: '@sensor.Info'
+            });
+
+            var citymap = {
+                chicago: {
+                    center: {lat: @sensor.Lattitude, lng: @sensor.Longtitude },
+                    population: 1
+                },
+                newyork: {
                 }
+            };
+           
+            var   arrowWest = [
+            {lat: @sensor.Lattitude, lng: @sensor.Longtitude},
+            {lat: @sensor.Lattitude, lng: @sensor.Longtitude-0.0015}
+            ];
+            var arrowEast = [
+            {lat: @sensor.Lattitude, lng: @sensor.Longtitude},
+            {lat: @sensor.Lattitude, lng: @sensor.Longtitude+0.0015}
+            ];
+            var arrowSouth = [
+            {lat: @sensor.Lattitude, lng: @sensor.Longtitude},
+            {lat: @sensor.Lattitude-0.0015, lng: @sensor.Longtitude}
+            ];
+
+            var arrowNorth= [
+            {lat: @sensor.Lattitude, lng: @sensor.Longtitude},
+            {lat: @sensor.Lattitude-0.0015, lng: @sensor.Longtitude}
+            ];
+            var arrowNorthWest= [
+            {lat: @sensor.Lattitude, lng: @sensor.Longtitude},
+            {lat: @sensor.Lattitude-0.0015, lng: @sensor.Longtitude-0.0015}
+            ];
+            var arrowNorthEast= [
+            {lat: @sensor.Lattitude, lng: @sensor.Longtitude},
+            {lat: @sensor.Lattitude-0.0015, lng: @sensor.Longtitude+0.0015}
+            ];
+            var arrowSouthWest= [
+            {lat: @sensor.Lattitude, lng: @sensor.Longtitude},
+            {lat: @sensor.Lattitude+0.0015, lng: @sensor.Longtitude-0.0015}
+            ];
+            var arrowSouthEast= [
+            {lat: @sensor.Lattitude, lng: @sensor.Longtitude},
+            {lat: @sensor.Lattitude+0.0015, lng: @sensor.Longtitude+0.0015}
+            ];
+            </text>
+            }
+
+            // Construct the circle for each value in citymap.
+            // Note: We scale the area of the circle based on the population.
+            
+            var cityCircle = new google.maps.Circle({
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0.35,
+                map: map,
+                center: citymap["chicago"].center,
+                radius: Math.sqrt(citymap["chicago"].population) * 100
+            });
+            var flightPath = new google.maps.Polyline({
+                path: arrowEast,
+                geodesic: true,
+                strokeColor: '#0000FF',
+                strokeOpacity: 1.0,
+                strokeWeight: 2
+            });
+
+            flightPath.setMap(null);
+            cityCircle.setMap(null);
+            
+                var newfunc = {
+                    updInterval: 1000, // 10 сек. - интервал времени между запросами
+                    url: sensorsUrl, // скрипт который должен отвечать на Ajax запросы
+                    init: function () {
+                        var self = newfunc;
+                        console.log("entry point");
+                        setInterval($.proxy(newfunc.requestData, self), self.updInterval);
+                    },
+                    requestData: function() {
+                        var self = newfunc;
+
+                        $.ajax({
+                            url: sensorsUrl,
+                            dataType: "json",
+                            method: 'POST',
+                            success: function (data) {
+                                console.log(cityCircle);
+                                if (data.temperature > 50 || data.smoke > 1000) {
+                                    cityCircle.setMap(map);
+                                    flightPath.setMap(map);
+
+                                } else {
+                                    cityCircle.setMap(null);
+                                    flightPath.setMap(null);
+                                }
+                               
+                            }
+                        });
+                    }
+                }
+                newfunc.init();
+                // Add the circle for this city to the map.          
         }
 
 
     </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-Ft9IBQZDBxxuuJhm5kJmm0o8-mHJ7ZU&callback=initMap"
-        type="text/javascript"></script>
-<script>
-    $(document).ready(function() {
-        var url = '@Url.Action("StartThread")';
-        debugger;
-        $.ajax({
-            url: url,
-            dataType: "json",
-            method: "GET",
-            success: function () {
-                console.log("success");
-            }
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-Ft9IBQZDBxxuuJhm5kJmm0o8-mHJ7ZU&callback=initMap"
+            type="text/javascript"></script>
+    <script>
+        $(document).ready(function() {
+
+            var url = '@Url.Action("StartThread")';
+            $.ajax({
+                url: url,
+                dataType: "json",
+                method: "GET",
+                success: function () {
+                    console.log("success");
+                }
+            });
         });
-    });
-</script>
+    </script>
     <script type="text/javascript" src="~/js/ajax-request.js"></script>
 
 </body>

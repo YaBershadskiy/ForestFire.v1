@@ -25,6 +25,8 @@ namespace ForestFires.Services
             xNode = xRoot.ChildNodes[0];
             weather.City = xNode["name"].InnerText;
 
+          
+
             xNode = xRoot.ChildNodes[5];
             XmlNode xNode1 = xNode.ChildNodes[0];
             xNode1 = xNode1.ChildNodes[0];
@@ -39,6 +41,10 @@ namespace ForestFires.Services
             art = xNode1.ChildNodes[5].Attributes.GetNamedItem("mps");
             art1 = art.Value;
             weather.WindSpeed = art1;
+
+            art = xNode1.ChildNodes[4].Attributes.GetNamedItem("deg");
+            art1 = art.Value;
+            weather.WindDirection = art1;
 
             art = xNode1.ChildNodes[6].Attributes.GetNamedItem("value");
             weather.AirTemperature = Convert.ToInt32(art.Value);

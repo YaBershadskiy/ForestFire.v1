@@ -14,6 +14,8 @@ namespace ForestFires.Models
         public double Precipitation { get; set; }
         public double Pressure { get; set; }
         public string WindSpeed { get; set; }
+
+        public string WindDirection { get; set; }
         public string Humidity { get; set; }
         public string City { get; set; }
         public string WeatherType { get; set; }
