@@ -78,12 +78,12 @@
                 </div>
                 <div id="about-info">
                     <b>Humindity</b><br />
-                    30 % <br />
+                    <div id="sensor-humidity">?? %</div>
 
-                    <b>Wind direction, speed & gust (mph)</b><br />
-                    NW  ☺ 20 <br />
+                    <b>Sensor temperature</b><br />
+                    <div id="sensor-temp">?? C</div>
                     <b>Smoke (ppm)</b><br />
-                    0.015 %
+                    <div id="sensor-smoke">?? ppm</div>
                 </div>
                 <div id="about-info-img">
                     <div class="info-group" id="info-group-1">
@@ -198,7 +198,7 @@
                                 {
                                     foreach (WeatherData item in ViewBag.Weather)
                                     {
-                                        <li>@item.Date</li>
+                                        <li id="weather-date">@item.Date</li>
                                     }
                                 }
                             </ul>
@@ -211,7 +211,7 @@
                                 {
                                     foreach (WeatherData item in ViewBag.Weather)
                                     {
-                                        <li>@item.AirTemperature C</li>
+                                        <li id="weather-temp">@item.AirTemperature C</li>
                                     }
                                 }
                             </ul>
@@ -224,7 +224,7 @@
                                 {
                                     foreach (WeatherData item in ViewBag.Weather)
                                     {
-                                        <li>@item.Humidity.ToString()%</li>
+                                        <li id="weather-humidity">@item.Humidity.ToString()%</li>
                                     }
                                 }
                             </ul>
@@ -237,7 +237,7 @@
                                 {
                                     foreach (WeatherData item in ViewBag.Weather )
                                     {
-                                       <li>@item.WindSpeed m/s</li> 
+                                       <li id="weather-wind">@item.WindSpeed m/s</li> 
                                     }
                                 }
                             </ul>
@@ -262,9 +262,10 @@
                             <ul>
                                 <li>Sensor</li>
                                 <br />
+                                @{ int id = 0;}
                                 @foreach (var item in Model)
                                 {
-                                    <li>@item.Updated.ToShortDateString()</li>
+                                    <li id="sendor-id-@id">@item.Id.ToString()</li>
                                 }
                             </ul>
                         </div>
@@ -272,9 +273,10 @@
                             <ul>
                                 <li>Temperature</li>
                                 <br />
+                                @{ id = 0;}
                                 @foreach (var item in Model)
                                 {
-                                    <li>@item.Temperature.ToString() C</li>
+                                    <li id="temp-id-@id">@item.Temperature.ToString()</li>
                                 }
                             </ul>
                         </div>
@@ -282,9 +284,10 @@
                             <ul>
                                 <li>Humidity</li>
                                 <br />
+                                @{ id = 0;}
                                 @foreach (var item in Model)
                                 {
-                                    <li>@item.Humidity.ToString()%</li>
+                                    <li id="humidity-id-@id">@item.Humidity.ToString()</li>
                                 }
                             </ul>
                         </div>
@@ -292,9 +295,10 @@
                             <ul>
                                 <li>Smoke</li>
                                 <br />
+                                @{ id = 0;}
                                 @foreach (var item in Model)
                                 {
-                                    <li>@item.Smoke.ToString() ppm</li>
+                                    <li id="smoke-id-@id">@item.Smoke.ToString()</li>
                                 }
                             </ul>
                         </div>
@@ -302,9 +306,10 @@
                             <ul>
                                 <li>Status</li>
                                 <br />
+                                @{ id = 0;}
                                 @foreach (var item in Model)
                                 {
-                                    <li>
+                                    <li id="status-id-@id">
                                         <div>
                                             @if (item.CurrentStatus == Status.Ok)
                                             {
@@ -323,9 +328,10 @@
                             <ul>
                                 <li>Date</li>
                                 <br />
+                                @{ id = 0;}
                                 @foreach (var item in Model)
                                 {
-                                    <li>@item.Updated.ToShortDateString()</li>
+                                    <li id="date-id-@id">@item.Updated.ToShortDateString()</li>
                                 }
                             </ul>
                         </div>
@@ -423,6 +429,7 @@
         });
     });
 </script>
+    <script type="text/javascript" src="~/js/ajax-request.js"></script>
 
 </body>
 </html>
