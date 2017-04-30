@@ -1,0 +1,7 @@
+Change Component Designator: OldDesignator=X4 NewDesignator=X5
+Change Component Designator: OldDesignator=X5 NewDesignator=X6
+Added Component: Designator=X4(DG301-5.0-02P)
+Added Pin To Net: NetName=GND Pin=X4-1
+Added Pin To Net: NetName=3.3 V Pin=X4-2
+Added Member To Class: ClassName=NASA Member=Component X6 DG301-5.0-03P
+Added Room: Name=NASA

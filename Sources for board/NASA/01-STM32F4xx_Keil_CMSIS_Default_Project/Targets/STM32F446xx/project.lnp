@@ -1,0 +1,21 @@
+--cpu Cortex-M4.fp
+".\targets\stm32f446xx\startup_stm32f446xx.o"
+".\targets\stm32f446xx\misc.o"
+".\targets\stm32f446xx\stm32f4xx_rcc.o"
+".\targets\stm32f446xx\stm32f4xx_gpio.o"
+".\targets\stm32f446xx\stm32f4xx_syscfg.o"
+".\targets\stm32f446xx\stm32f4xx_usart.o"
+".\targets\stm32f446xx\stm32f4xx_i2c.o"
+".\targets\stm32f446xx\stm32f4xx_adc.o"
+".\targets\stm32f446xx\stm32f4xx_dma.o"
+".\targets\stm32f446xx\tm_stm32f4_gpio.o"
+".\targets\stm32f446xx\tm_stm32f4_adc.o"
+".\targets\stm32f446xx\main.o"
+".\targets\stm32f446xx\stm32f4xx_it.o"
+".\targets\stm32f446xx\system_stm32f4xx.o"
+".\targets\stm32f446xx\itoa.o"
+".\targets\stm32f446xx\stm32f4xx_tim.o"
+--strict --scatter ".\Targets\STM32F446xx\project.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\project.map" -o .\Targets\STM32F446xx\project.axf

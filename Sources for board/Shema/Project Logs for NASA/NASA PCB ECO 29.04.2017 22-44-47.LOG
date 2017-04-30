@@ -1,0 +1,6 @@
+Added Component: Designator=U1(MF03A_N)
+Added Pin To Net: NetName=NetC6_2 Pin=U1-1
+Added Pin To Net: NetName=VCC Pin=U1-2
+Added Pin To Net: NetName=3.3 V Pin=U1-3
+Added Member To Class: ClassName=NASA Member=Component U1 LM1117DTX-1.8
+Added Room: Name=NASA

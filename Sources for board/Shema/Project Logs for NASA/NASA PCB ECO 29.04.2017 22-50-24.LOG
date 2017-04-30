@@ -1,0 +1,23 @@
+Removed Pin From Net: NetName=RES Pin=P1-1
+Removed Pin From Net: NetName=SPI_MOSI Pin=P1-2
+Removed Pin From Net: NetName=SPI_MISO Pin=P1-3
+Removed Pin From Net: NetName=SPI_SCK Pin=P1-4
+Removed Pin From Net: NetName=SPI_NSS Pin=P1-5
+Removed Pin From Net: NetName=GND Pin=X4-1
+Removed Pin From Net: NetName=3.3 V Pin=X4-2
+Removed Member From Class: ClassName=NASA Member=P1
+Change Component DesignItemId : Designator=X4 Old DesignItemId=DG301-5.0-02P-12-00A New DesignItemId=PLS-6
+Change Component Footprint: Designator=X4 Old Footprint=DG301-5.0-02P New Footprint=PLS-6-3D
+Change Component Designator: OldDesignator=X5 NewDesignator=X6
+Change Component Designator: OldDesignator=X6 NewDesignator=X7
+Added Component: Designator=X5(DG301-5.0-02P)
+Added Pin To Net: NetName=SPI_NSS Pin=X4-1
+Added Pin To Net: NetName=SPI_SCK Pin=X4-2
+Added Pin To Net: NetName=SPI_MISO Pin=X4-3
+Added Pin To Net: NetName=SPI_MOSI Pin=X4-4
+Added Pin To Net: NetName=RES Pin=X4-5
+Added Pin To Net: NetName=GND Pin=X4-1
+Added Pin To Net: NetName=3.3 V Pin=X4-2
+Added Member To Class: ClassName=NASA Member=Component X4 
+Added Member To Class: ClassName=NASA Member=Component X7 DG301-5.0-03P
+Added Room: Name=NASA
